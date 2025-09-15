@@ -6,7 +6,7 @@ const PRODUCTS = [
     "price": 651000,
     "image": "images/divan/d-best1.jpg",
     "tag": "Хит сезона",
-    "rating": 10,
+    "rating": 5,
      desc: `
       <ul>
       <li> <strong>Регулиремые подголовники</strong></li>
@@ -29,7 +29,7 @@ const PRODUCTS = [
     "price": 1050000,
     "image": "images/divan/d-golf1.jpg",
     "tag": "Новинка",
-    "rating": 10
+    "rating": 5
   },
   {
     "id": 3,
@@ -38,7 +38,7 @@ const PRODUCTS = [
     "price": 880000,
     "image": "images/divan/d-norton11.jpg",
     "tag": "Новинка",
-    "rating": 10
+    "rating": 5
   },
   {
     "id": 4,
@@ -46,8 +46,8 @@ const PRODUCTS = [
     "name": "Диваны Нортон",
     "price": 1243000,
     "image": "images/divan/d-nortonatamanka1.jpg",
-    "tag": "СКИДКА до 1060000",
-    "rating": 10
+    "tag": "СКИДКА до 1 060 000",
+    "rating": 5
   },
   {
     "id": 5,
@@ -55,8 +55,8 @@ const PRODUCTS = [
     "name": "Диван Кватро",
     "price": 1080000,
     "image": "images/divan/d-quatro a.jpg",
-    "tag": "СКИДКА ДО 950000",
-    "rating": 10
+    "tag": "СКИДКА ДО 950 000",
+    "rating": 5
   },
   {
     "id": 6,
@@ -65,7 +65,7 @@ const PRODUCTS = [
     "price": 96600,
     "image": "images/divan/d-quatro11.jpg",
     "tag": "Новинка",
-    "rating": 10
+    "rating": 5
   },
   {
     "id": 7,
@@ -74,7 +74,7 @@ const PRODUCTS = [
     "price": 256200,
     "image": "images/divan/kreslosoft.jpg",
     "tag": "Новинка",
-    "rating": 10
+    "rating": 5
   },
   {
     "id": 8,
@@ -83,43 +83,43 @@ const PRODUCTS = [
     "price": 1395000,
     "image": "images/divan/grand.jpg",
     "tag": "Новое поступление",
-    "rating": 10
+    "rating": 5
   },
   {
     "id": 9,
     "category": "Диваны",
-    "name": "Диваны 9",
-    "price": 655414,
-    "image": "images/divan4.jpg",
+    "name": "Диван Сохо",
+    "price": 1279000,
+    "image": "images/divan/d-sohp.jpg",
     "tag": "Новинка",
-    "rating": 4.2
+    "rating": 5
   },
   {
     "id": 10,
     "category": "Диваны",
-    "name": "Диваны 10",
-    "price": 912296,
-    "image": "images/divan5.jpg",
+    "name": "Диван Карат",
+    "price": 900000,
+    "image": "images/diva/d-carat.webp",
     "tag": "Новинка",
-    "rating": 4.8
+    "rating": 5
   },
   {
     "id": 11,
     "category": "Диваны",
-    "name": "Диваны 11",
-    "price": 1232164,
-    "image": "images/divan6.jpg",
+    "name": "Диван Кредо",
+    "price": 1105000,
+    "image": "images/divan/d-credo.webp",
     "tag": "Хит",
-    "rating": 4.0
+    "rating": 5
   },
   {
     "id": 12,
     "category": "Диваны",
-    "name": "Диваны 12",
-    "price": 1860681,
-    "image": "images/divan1.jpg",
+    "name": "Диван Гольф",
+    "price": 1063000,
+    "image": "images/divan/d-golf3.webp",
     "tag": "Новинка",
-    "rating": 4.9
+    "rating": 5
   },
   {
     "id": 13,
