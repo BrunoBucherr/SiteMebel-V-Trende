@@ -90,7 +90,7 @@ const PRODUCTS = [
     "category": "Диваны",
     "name": "Диван Сохо",
     "price": 1279000,
-    "image": "images/divan/d-sohp.jpg",
+    "image": "images/divan/d-soho.jpg",
     "tag": "Новинка",
     "rating": 5
   },
@@ -99,7 +99,7 @@ const PRODUCTS = [
     "category": "Диваны",
     "name": "Диван Карат",
     "price": 900000,
-    "image": "images/diva/d-carat.jpg",
+    "image": "images/divan/d-carat.jpg",
     "tag": "Новинка",
     "rating": 5
   },
