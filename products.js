@@ -108,7 +108,7 @@ const PRODUCTS = [
     "category": "Диваны",
     "name": "Диван Кредо",
     "price": 1105000,
-    "image": "images/divan/d-credo.jpg",
+    "image": "images/divan/d-credo3.jpg",
     "tag": "Хит",
     "rating": 5
   },
