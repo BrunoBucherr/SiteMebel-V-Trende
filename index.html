@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mebel V Trende — Магазин мебели</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="header">
+      <div class="logo">
+        <img src="logo.png" alt="Mebel V Trende" class="logo-img">
+        <div class="brand-text">
+          <div class="brand-title">Mebel V Trende</div>
+          <div class="brand-sub">Диваны • Стулья • Столы</div>
+        </div>
+      </div>
+
+      <nav class="main-nav">
+        <a href="#catalog">Каталог</a>
+        <a href="#popular">Популярное</a>
+        <a href="#about">О нас</a>
+      </nav>
+
+      <div class="actions">
+        <button class="btn" onclick="openCart()">Корзина (<span id="cart-count">0</span>)</button>
+        <button class="btn" onclick="scrollToSection('catalog')">Смотреть каталог</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-left">
+        <h1>Мебель в тренде — уют и стиль в каждом доме</h1>
+        <p class="muted">Большой выбор диванов, стульев и столов. Качественные материалы, сборка и доставка по Костанайской области</p>
+        <div class="controls">
+          <div class="categories" id="category-controls">
+            <button class="chip active" data-cat="all" onclick="setCategory('all')">Все</button>
+            <button class="chip" data-cat="Диваны" onclick="setCategory('Диваны')">Диваны</button>
+            <button class="chip" data-cat="Столы" onclick="setCategory('Столы')">Столы</button>
+            <button class="chip" data-cat="Стулья" onclick="setCategory('Стулья')">Стулья</button>
+          </div>
+
+          <div class="search-sort">
+            <input id="search" placeholder="Поиск по товарам..." oninput="onSearch()" />
+            <select id="sort" onchange="onSort()">
+              <option value="default">Сортировка</option>
+              <option value="cheap">Сначала дешёвые</option>
+              <option value="expensive">Сначала дорогие</option>
+              <option value="rating">По рейтингу</option>
+            </select>
+          </div>
+
+          <div class="price-filter">
+            <label>Цена от <input id="priceMin" type="number" min="10000" step="10000" value="10000" oninput="renderProducts()" /> до
+            <input id="priceMax" type="range" min="10000" max="2000000" step="10000" value="2000000" oninput="onPriceRange()"/></label>
+            <div class="price-value">до <span id="priceMaxVal">2 000 000</span> тг</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero-right card">
+        <div style="font-weight:700">Быстрая корзина</div>
+        <div id="mini-cart" class="muted" style="margin-top:10px">Пусто</div>
+        <div style="margin-top:12px;display:flex;gap:8px">
+          <button class="btn" onclick="openCart()">Перейти в корзину</button>
+          <button class="btn accent" onclick="openCheckout()">Оформить</button>
+        </div>
+      </aside>
+    </section>
+
+    <section id="catalog" class="catalog-section">
+      <h2>Каталог</h2>
+      <div id="products" class="products-grid"></div>
+      <div id="pagination" style="margin-top:14px;text-align:center"></div>
+    </section>
+
+    <section id="popular" class="popular-section">
+      <h2>Популярные</h2>
+      <div id="popular-list" class="products-grid small-grid"></div>
+    </section>
+
+    <section id="about" class="about-section">
+      <h2>Почему выбирают нас</h2>
+      <div class="features">
+        <div class="feature">🚚 Быстрая доставка</div>
+        <div class="feature">🛠 Профессиональная сборка</div>
+        <div class="feature">💳 Удобная оплата</div>
+        <div class="feature">📞 Поддержка</div>
+      </div>
+
+      <div class="about-text card">
+        <p class="muted">Mebel V Trende — команда профессионалов, мы подберём мебель под ваш интерьер, поможем с доставкой и сборкой.</p>
+        <p><strong>Контакты:</strong> +7 708 501 54 23 — Whatsapp / Звонок</p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>© Mebel V Trende — Все права защищены</div>
+      <div class="muted">Доставка по Костанайской облости • support@mebelvtrende.kz</div>
+    </footer>
+  </div>
+
+  <!-- Cart sidebar -->
+  <aside id="cart" class="cart-sidebar" aria-hidden="true">
+    <div class="cart-header"><h3>Корзина</h3><button class="close" onclick="closeCart()">✕</button></div>
+    <div id="cart-items" class="cart-items"></div>
+    <div class="cart-footer">
+      <div>Итого: <strong id="cart-total">0 тг</strong></div>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn" onclick="clearCart()">Очистить</button>
+        <button class="btn accent" onclick="openCheckout()">Оформить</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Checkout modal -->
+  <div id="checkout" class="modal" aria-hidden="true">
+    <div class="modal-box">
+      <button class="close" onclick="closeCheckout()">✕</button>
+      <h3>Оформление заказа</h3>
+      <form id="checkout-form" onsubmit="submitOrder(event)">
+        <div class="field"><label>ФИО</label><input id="fio" required></div>
+        <div class="field"><label>Телефон</label><input id="phone" required placeholder="+7 708 123 45 67"></div>
+        <div class="field"><label>Способ получения</label>
+          <div><label><input type="radio" name="receive" value="Самовывоз" checked> Самовывоз</label>
+          <label><input type="radio" name="receive" value="Доставка"> Доставка</label></div>
+        </div>
+
+        <div id="delivery-options" style="display:none">
+          <div class="field"><label>Адрес доставки</label><input id="address" placeholder="Город, улица, дом, кв."></div>
+          <div class="field"><label>Подъём</label>
+            <div><label><input type="radio" name="lift" value="noLift" checked> Подъём 2000 тг/этаж</label>
+            <label><input type="radio" name="lift" value="lift"> Есть лифт (3000 тг)</label></div>
+          </div>
+          <div class="field"><label>Этажи (если подъём без лифта)</label><input id="floors" type="number" min="0" value="1" oninput="updateDeliveryPreview()"></div>
+          <div class="muted">Стоимость подъёма: <span id="delivery-cost">0 тг</span></div>
+        </div>
+
+        <div class="order-summary card" style="margin-top:12px">
+          <div style="font-weight:700">Товары</div>
+          <div id="order-items" style="margin-top:8px"></div>
+          <div style="border-top:1px solid rgba(255,255,255,0.03);padding-top:8px;margin-top:8px">Итого: <strong id="order-total">0 тг</strong></div>
+        </div>
+
+        <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
+          <button type="button" class="btn" onclick="closeCheckout()">Отмена</button>
+          <button type="submit" class="btn accent">Купить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Success modal -->
+  <div id="success" class="modal" aria-hidden="true">
+    <div class="modal-box">
+      <h3>Спасибо — заказ отправлен</h3>
+      <p class="muted">Мы свяжемся с вами в ближайшее время для подтверждения.</p>
+      <div style="margin-top:12px"><button class="btn" onclick="closeSuccess()">Закрыть</button></div>
+    </div>
+  </div>
+
+  <button class="whatsapp-float" onclick="window.open('https://wa.me/77085015423','_blank')">💬</button>
+
+  <script src="products.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
