@@ -99,7 +99,7 @@ const PRODUCTS = [
     "category": "Диваны",
     "name": "Диван Карат",
     "price": 900000,
-    "image": "images/diva/d-carat.webp",
+    "image": "images/diva/d-carat.jpg",
     "tag": "Новинка",
     "rating": 5
   },
@@ -108,7 +108,7 @@ const PRODUCTS = [
     "category": "Диваны",
     "name": "Диван Кредо",
     "price": 1105000,
-    "image": "images/divan/d-credo.webp",
+    "image": "images/divan/d-credo.jpg",
     "tag": "Хит",
     "rating": 5
   },
@@ -117,7 +117,7 @@ const PRODUCTS = [
     "category": "Диваны",
     "name": "Диван Гольф",
     "price": 1063000,
-    "image": "images/divan/d-golf3.webp",
+    "image": "images/divan/d-golf3.jpg",
     "tag": "Новинка",
     "rating": 5
   },
