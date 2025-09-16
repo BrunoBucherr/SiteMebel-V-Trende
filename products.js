@@ -556,153 +556,153 @@ const PRODUCTS = [
   {
     "id": 61,
     "category": "Стулья",
-    "name": "Стулья 1",
-    "price": 132347,
-    "image": "images/stul2.jpg",
+    "name": "Стул Зефир",
+    "price": 51000,
+    "image": "images/stul/s-zefirred.jpg",
     "tag": "Новинка",
     "rating": 4.5
   },
   {
     "id": 62,
     "category": "Стулья",
-    "name": "Стулья 2",
-    "price": 1670676,
-    "image": "images/stul3.jpg",
+    "name": "Стул Версаль",
+    "price": 62000,
+    "image": "images/stul/versal.jpg",
     "tag": "Хит",
     "rating": 4.6
   },
   {
     "id": 63,
     "category": "Стулья",
-    "name": "Стулья 3",
-    "price": 807142,
-    "image": "images/stul4.jpg",
+    "name": "Стул Милан",
+    "price": 58000,
+    "image": "images/stul/milanbj.jpg",
     "tag": "Скидка",
     "rating": 4.6
   },
   {
     "id": 64,
     "category": "Стулья",
-    "name": "Стулья 4",
-    "price": 996866,
-    "image": "images/stul5.jpg",
+    "name": "Стул Милан",
+    "price": 56000,
+    "image": "images/stul/milanseriy.jpg",
     "tag": "Хит",
     "rating": 4.4
   },
   {
     "id": 65,
     "category": "Стулья",
-    "name": "Стулья 5",
-    "price": 18332,
-    "image": "images/stul6.jpg",
+    "name": "Стул Лира",
+    "price": 40000,
+    "image": "images/stul/lira.jpg",
     "tag": "Хит",
     "rating": 4.6
   },
   {
     "id": 66,
     "category": "Стулья",
-    "name": "Стулья 6",
-    "price": 48075,
-    "image": "images/stul1.jpg",
+    "name": "Стул Джерси",
+    "price": 52000,
+    "image": "images/stul/jersymilk.jpg",
     "tag": "",
     "rating": 4.2
   },
   {
     "id": 67,
     "category": "Стулья",
-    "name": "Стулья 7",
-    "price": 27669,
-    "image": "images/stul2.jpg",
+    "name": "Стул Дилл момо",
+    "price": 58000,
+    "image": "images/stul/dillmomo.jpg",
     "tag": "Хит",
     "rating": 4.1
   },
   {
     "id": 68,
     "category": "Стулья",
-    "name": "Стулья 8",
-    "price": 1495573,
-    "image": "images/stul3.jpg",
+    "name": "Стул Боско",
+    "price": 48000,
+    "image": "images/stul/bosqo bl.jpg",
     "tag": "Хит",
     "rating": 5.0
   },
   {
     "id": 69,
     "category": "Стулья",
-    "name": "Стулья 9",
-    "price": 1139102,
-    "image": "images/stul4.jpg",
+    "name": "Стул Боско",
+    "price": 48000,
+    "image": "images/stul/bosqo bj.jpg",
     "tag": "",
     "rating": 3.7
   },
   {
     "id": 70,
     "category": "Стулья",
-    "name": "Стулья 10",
-    "price": 207631,
-    "image": "images/stul5.jpg",
+    "name": "Стул Бентли Дэнс",
+    "price": 58000,
+    "image": "images/stul/bentlydanceblue.jpg",
     "tag": "",
     "rating": 3.6
   },
   {
     "id": 71,
     "category": "Стулья",
-    "name": "Стулья 11",
-    "price": 930131,
-    "image": "images/stul6.jpg",
+    "name": "Стул Бентли",
+    "price": 54000,
+    "image": "images/stul/bentlybej.jpg",
     "tag": "Новинка",
     "rating": 4.1
   },
   {
     "id": 72,
     "category": "Стулья",
-    "name": "Стулья 12",
-    "price": 1974755,
-    "image": "images/stul1.jpg",
+    "name": "Стул Бентли",
+    "price": 54000,
+    "image": "images/stul/bently graphit.jpg",
     "tag": "Новинка",
     "rating": 4.5
   },
   {
     "id": 73,
     "category": "Стулья",
-    "name": "Стулья 13",
-    "price": 403330,
-    "image": "images/stul2.jpg",
+    "name": "Стул Бентли Дэнс",
+    "price": 58000,
+    "image": "images/stul/bently dy.jpg",
     "tag": "Новинка",
     "rating": 3.5
   },
   {
     "id": 74,
     "category": "Стулья",
-    "name": "Стулья 14",
-    "price": 1938549,
-    "image": "images/stul3.jpg",
+    "name": "Стул Монако",
+    "price": 30000,
+    "image": "images/stul/monaqo.jpg",
     "tag": "Новинка",
     "rating": 3.8
   },
   {
     "id": 75,
     "category": "Стулья",
-    "name": "Стулья 15",
-    "price": 1240931,
-    "image": "images/stul4.jpg",
+    "name": "Стул Кельвин",
+    "price": 62000,
+    "image": "images/stul/qelvin.jpg",
     "tag": "Скидка",
     "rating": 3.5
   },
   {
     "id": 76,
     "category": "Стулья",
-    "name": "Стулья 16",
-    "price": 363416,
-    "image": "images/stul5.jpg",
+    "name": "Стул Руссо",
+    "price": 60000,
+    "image": "images/stul/russo.jpg",
     "tag": "Хит",
     "rating": 4.5
   },
   {
     "id": 77,
     "category": "Стулья",
-    "name": "Стулья 17",
-    "price": 1026656,
-    "image": "images/stul6.jpg",
+    "name": "Стул Гранд",
+    "price": 47000,
+    "image": "images/stul/s-grand.jpg",
     "tag": "Хит",
     "rating": 4.5
   },
@@ -822,5 +822,105 @@ const PRODUCTS = [
     "image": "images/stul1.jpg",
     "tag": "Скидка",
     "rating": 4.3
+  },
+  {
+    "id": 91,
+    "category": "Стулья",
+    "name": "Стулья 30",
+    "price": 436273,
+    "image": "images/stul1.jpg",
+    "tag": "Скидка",
+    "rating": 4.3
+  },
+  {
+    "id": 92,
+    "category": "Стулья",
+    "name": "Стулья 30",
+    "price": 436273,
+    "image": "images/stul1.jpg",
+    "tag": "Скидка",
+    "rating": 4.3
+  },
+{
+    "id": 93,
+    "category": "Стулья",
+    "name": "Стулья 30",
+    "price": 436273,
+    "image": "images/stul1.jpg",
+    "tag": "Скидка",
+    "rating": 4.3
+  },
+  {
+    "id": 94,
+    "category": "Стулья",
+    "name": "Стулья 30",
+    "price": 436273,
+    "image": "images/stul1.jpg",
+    "tag": "Скидка",
+    "rating": 4.3
+  },
+  {
+    "id": 90,
+    "category": "Стулья",
+    "name": "Стулья 30",
+    "price": 436273,
+    "image": "images/stul1.jpg",
+    "tag": "Скидка",
+    "rating": 4.3
+  },
+  {
+    "id": 90,
+    "category": "Стулья",
+    "name": "Стулья 30",
+    "price": 436273,
+    "image": "images/stul1.jpg",
+    "tag": "Скидка",
+    "rating": 4.3
+  },
+  {
+    "id": 90,
+    "category": "Стулья",
+    "name": "Стулья 30",
+    "price": 436273,
+    "image": "images/stul1.jpg",
+    "tag": "Скидка",
+    "rating": 4.3
+  },
+  {
+    "id": 90,
+    "category": "Стулья",
+    "name": "Стулья 30",
+    "price": 436273,
+    "image": "images/stul1.jpg",
+    "tag": "Скидка",
+    "rating": 4.3
+  },
+  {
+    "id": 90,
+    "category": "Стулья",
+    "name": "Стулья 30",
+    "price": 436273,
+    "image": "images/stul1.jpg",
+    "tag": "Скидка",
+    "rating": 4.3
+  },
+  {
+    "id": 90,
+    "category": "Стулья",
+    "name": "Стулья 30",
+    "price": 436273,
+    "image": "images/stul1.jpg",
+    "tag": "Скидка",
+    "rating": 4.3
+  },
+  {
+    "id": 90,
+    "category": "Стулья",
+    "name": "Стулья 30",
+    "price": 436273,
+    "image": "images/stul1.jpg",
+    "tag": "Скидка",
+    "rating": 4.3
   }
+  
 ];
