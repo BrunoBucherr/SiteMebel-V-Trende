@@ -38,6 +38,22 @@ body {
 .btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:8px;color:var(--white);cursor:pointer}
 .btn.accent{background:var(--accent);color:#071018;border:0;font-weight:700}
 
+/* Language Toggle */
+#lang-toggle {
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:8px;
+  padding:8px 12px;
+  color:var(--white);
+  cursor:pointer;
+  font-size:16px;
+  transition:all 0.3s ease;
+}
+#lang-toggle:hover {
+  background:var(--accent);
+  color:#071018;
+}
+
 /* HERO */
 .hero{display:grid;grid-template-columns:1fr 340px;gap:18px;margin-top:18px}
 .hero-left{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:20px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
@@ -60,19 +76,23 @@ body {
   color:var(--white);
   font-size:14px;
 }
+.search-sort input::placeholder {color:#aaa;}
 .search-sort select{
   padding:10px;
   border-radius:8px;
   border:1px solid rgba(255,255,255,0.04);
   background:#071018;
   color:var(--white);
+  font-size:14px;
+  cursor:pointer;
+}
+.search-sort select option {
+  background:#071018;
+  color:var(--white);
 }
 
 /* SEARCH ICON */
-.search-wrapper {
-  position:relative;
-  flex:1;
-}
+.search-wrapper {position:relative;flex:1;}
 .search-wrapper input{width:100%}
 .search-icon {
   position:absolute;
@@ -84,9 +104,7 @@ body {
   pointer-events:none;
   transition:0.3s;
 }
-.search-wrapper input:focus + .search-icon {
-  color:var(--accent);
-}
+.search-wrapper input:focus + .search-icon {color:var(--accent);}
 
 /* PRICE FILTER */
 .price-filter{display:flex;flex-direction:column;gap:6px}
@@ -109,6 +127,7 @@ body {
   opacity:0;
   transform:translateY(8px);
   animation:fadeIn 400ms forwards;
+  color:var(--white);
 }
 .product .photo {
   height:220px;
@@ -161,6 +180,7 @@ body {
   box-shadow:0 10px 30px rgba(2,6,23,0.6);
   display:none;
   flex-direction:column;
+  color:var(--white);
 }
 .cart-header{display:flex;justify-content:space-between;align-items:center}
 .cart-items{overflow:auto;max-height:48vh;margin-top:8px;display:flex;flex-direction:column;gap:8px}
@@ -169,7 +189,7 @@ body {
 
 /* MODAL */
 .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(2,6,23,0.7),rgba(2,6,23,0.85));padding:18px;z-index:60}
-.modal-box{background:var(--bg);padding:18px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);width:100%;max-width:900px;max-height:90vh;overflow:auto}
+.modal-box{background:var(--bg);padding:18px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);width:100%;max-width:900px;max-height:90vh;overflow:auto;color:var(--white);}
 .modal .close{background:transparent;border:0;color:var(--muted);font-size:18px;cursor:pointer;float:right}
 
 /* FLOAT WHATSAPP */
@@ -193,3 +213,101 @@ body {
   .hero-left h1{font-size:22px}
   .footer{flex-direction:column;text-align:center}
 }
+
+/* ORDER BLOCK */
+.order-block {
+  background: linear-gradient(135deg, #0b1116, #151f29);
+  border: 1px solid rgba(255,106,0,0.3);
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+  margin: 30px 0;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  color:var(--white);
+}
+.order-block h2 {
+  color: #ff6a00;
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+.order-block p {
+  color: #9aa4ae;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+.btn-order {
+  display: inline-block;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #ff6a00, #ff9500);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(255,106,0,0.5);
+  transition: all 0.3s ease;
+}
+.btn-order:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(255,106,0,0.6);
+}
+
+/* ========================= */
+/* LIGHT THEME SUPPORT */
+/* ========================= */
+body.light {
+  background: linear-gradient(180deg, #f2f5f8, #e8ecef);
+  color: #1a1a1a;
+}
+body.light .header,
+body.light .hero-left,
+body.light .card,
+body.light .feature,
+body.light .product,
+body.light .cart-sidebar,
+body.light .modal-box,
+body.light .order-block {
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #1a1a1a;
+}
+body.light .brand-sub,
+body.light .muted,
+body.light .footer,
+body.light .cart-item,
+body.light .price-value {
+  color: #555;
+}
+body.light .product .photo {
+  background:#f2f2f2;
+  color:#777;
+}
+
+/* === critical fixes for select visibility in light theme === */
+body.light .search-sort input,
+body.light .search-sort select {
+  background: #fff !important;
+  color: #111 !important;
+  -webkit-text-fill-color: #111 !important;
+  border: 1px solid #ccc !important;
+}
+body.light .search-sort input::placeholder {
+  color: #777;
+}
+body.light .search-sort select option {
+  background: #fff;
+  color: #000 !important;
+}
+body.light .search-sort select:-moz-focusring {
+  color: #111 !important;
+  text-shadow: 0 0 0 #111;
+}
+
+/* final minor overrides for buttons/links in light theme */
+body.light .main-nav a {color:#444;}
+body.light .btn {color:#222;border-color:#ccc;}
+body.light .btn.accent {color:#fff;}
+body.light #lang-toggle {color:#222;border-color:#ccc;}
+body.light .modal {background:rgba(0,0,0,0.5);}
+body.light .order-block h2 {color:#ff6a00;}
+body.light .order-block p {color:#555;}

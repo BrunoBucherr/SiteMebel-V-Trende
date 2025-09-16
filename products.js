@@ -11,7 +11,7 @@ const PRODUCTS = [
       <ul>
       <li> <strong>Регулиремые подголовники</strong></li>
       <li><strong>Механизм раскладывания-дельфин</strong></li>
-      <li><strong>Каркас из деревяного бруса</strong></li>
+      <li><strong>Каркас-деревянный брус+металл</strong></li>
       <li><strong>Наполнения-Многослойный пенополиуретан</strong></li>
       <li><strong>Пружина-ЗМЕЙКА</strong></li>
         <li>Длина:2410мм</li> 

@@ -17,10 +17,37 @@ function removeItem(id){ let c=getCart().filter(x=>x.id!==id); saveCart(c); }
 function clearCart(){ localStorage.removeItem('mvt_cart'); saveCart([]); closeCart(); showToast('Корзина очищена'); }
 
 function updateCartCount(){ const el = document.getElementById('cart-count'); if(el) el.textContent = getCart().reduce((s,i)=>s+i.qty,0); }
-function renderMiniCart(){ const el = document.getElementById('mini-cart'); if(!el) return; const c = getCart(); if(c.length===0){ el.innerHTML = 'Пусто'; return; } el.innerHTML = c.map(i=>`<div style="display:flex;justify-content:space-between;margin-top:6px"><div>${i.name} x${i.qty}</div><div>${formatPrice(i.price*i.qty)}</div></div>`).join(''); }
+
+// ==== ОБНОВЛЁННАЯ ФУНКЦИЯ ====
+function renderMiniCart(){ 
+  const el = document.getElementById('mini-cart'); 
+  if(!el) return; 
+  const c = getCart(); 
+
+  if(c.length===0){ 
+    el.innerHTML = 'Пусто'; 
+    return; 
+  } 
+
+  el.innerHTML = c.map(i=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:6px">
+      <div style="flex:1">${i.name} x${i.qty}</div>
+      <div>${formatPrice(i.price*i.qty)}</div>
+      <div style="display:flex;gap:4px">
+        <button class="btn" style="padding:2px 6px" onclick="changeQty(${i.id},1)">+</button>
+        <button class="btn" style="padding:2px 6px" onclick="changeQty(${i.id},-1)">−</button>
+        <button class="btn" style="padding:2px 6px" onclick="removeItem(${i.id})">✖</button>
+      </div>
+    </div>
+  `).join('') 
+  + `<div style="margin-top:10px;text-align:right">
+       <button class="btn" onclick="clearCart()">Очистить корзину</button>
+     </div>`;
+}
+// =============================
 
 /* Products render with pagination */
-function setCategory(cat){ currentCategory = cat; currentPage = 1; // update chips
+function setCategory(cat){ currentCategory = cat; currentPage = 1;
   document.querySelectorAll('.chip').forEach(ch=> ch.classList.toggle('active', ch.dataset.cat===cat || (cat==='all'&&ch.dataset.cat==='all')));
   renderProducts();
 }
@@ -29,17 +56,13 @@ function onSort(){ sortOption = document.getElementById('sort').value || 'defaul
 function onPriceRange(){ priceMax = Number(document.getElementById('priceMax').value||2000000); document.getElementById('priceMaxVal').innerText = Number(priceMax).toLocaleString(); renderProducts(); }
 function renderProducts(){
   const container = document.getElementById('products'); if(!container) return;
-  let list = PRODUCTS.slice(); // copy
-  // filter category
+  let list = PRODUCTS.slice(); 
   if(currentCategory !== 'all') list = list.filter(p=>p.category===currentCategory);
-  // filter price and search
   list = list.filter(p=> p.price>= (Number(document.getElementById('priceMin').value||10000)) && p.price<=priceMax);
   if(searchQuery) list = list.filter(p=> (p.name+p.desc).toLowerCase().includes(searchQuery.toLowerCase()));
-  // sort
   if(sortOption==='cheap') list.sort((a,b)=>a.price-b.price);
   if(sortOption==='expensive') list.sort((a,b)=>b.price-a.price);
   if(sortOption==='rating') list.sort((a,b)=>b.rating - a.rating);
-  // pagination
   const totalPages = Math.max(1, Math.ceil(list.length / PER_PAGE));
   if(currentPage > totalPages) currentPage = 1;
   const start = (currentPage-1)*PER_PAGE;
@@ -59,9 +82,7 @@ function renderProducts(){
   renderPagination(totalPages);
 }
 
-  // animate items (already CSS animation on .product)
-
-
+/* Pagination */
 function renderPagination(totalPages){
   const el = document.getElementById('pagination'); if(!el) return;
   el.innerHTML = '';
@@ -79,15 +100,13 @@ function renderPagination(totalPages){
 /* Popular */
 function renderPopular(){ const el = document.getElementById('popular-list'); if(!el) return; const top = PRODUCTS.slice().sort((a,b)=>b.rating-a.rating).slice(0,8); el.innerHTML = top.map(p=>`<div class="product card"><div class="photo" style="height:120px"><img src="${p.image}" style="width:100%;height:100%;object-fit:cover;border-radius:6px"></div><div style="font-weight:700;margin-top:8px">${p.name}</div><div class="muted small">${formatPrice(p.price)}</div></div>`).join(''); }
 
-/* Product modal (quick view) */
+/* Product modal */
 function openProduct(id){
   const p = PRODUCTS.find(x=>x.id===id);
   if(!p) return;
-
   const modal = document.createElement('div');
   modal.className = 'modal';
   modal.style.display = 'flex';
-
   const box = document.createElement('div');
   box.className = 'modal-box';
   box.innerHTML = `
@@ -108,25 +127,11 @@ function openProduct(id){
       </div>
     </div>
   `;
-
   modal.appendChild(box);
   document.body.appendChild(modal);
-
-  // закрытие по кнопке
-  box.querySelector('#modal-close').addEventListener('click', ()=>{
-    document.body.removeChild(modal);
-  });
-
-  // добавить в корзину
-  box.querySelector('#modal-add').addEventListener('click', ()=>{
-    addToCart(p.id);
-    document.body.removeChild(modal);
-  });
-
-  // закрытие по клику вне окна
-  modal.onclick = (e)=>{
-    if(e.target===modal) document.body.removeChild(modal);
-  };
+  box.querySelector('#modal-close').addEventListener('click', ()=>{ document.body.removeChild(modal); });
+  box.querySelector('#modal-add').addEventListener('click', ()=>{ addToCart(p.id); document.body.removeChild(modal); });
+  modal.onclick = (e)=>{ if(e.target===modal) document.body.removeChild(modal); };
 }
 
 /* Cart sidebar */
@@ -135,7 +140,13 @@ function closeCart(){ document.getElementById('cart').style.display='none'; docu
 function renderCartItems(){ const el = document.getElementById('cart-items'); if(!el) return; const c = getCart(); if(c.length===0){ el.innerHTML = '<div class="muted">Корзина пуста</div>'; document.getElementById('cart-total').innerText = formatPrice(0); return; } el.innerHTML = c.map(i=>`<div class="cart-item"><div style="flex:1"><div style="font-weight:700">${i.name}</div><div class="muted small">${formatPrice(i.price)}</div></div><div style="text-align:right"><div style="margin-bottom:6px">${formatPrice(i.price*i.qty)}</div><div style="display:flex;gap:6px;justify-content:flex-end"><button class="btn" onclick="changeQty(${i.id},1)">+</button><div style="padding:6px 8px;border-radius:6px;background:#071018">${i.qty}</div><button class="btn" onclick="changeQty(${i.id},-1)">-</button></div><div style="margin-top:8px"><button class="btn" onclick="removeItem(${i.id})">Удалить</button></div></div></div>`).join(''); document.getElementById('cart-total').innerText = formatPrice(c.reduce((s,i)=>s+i.price*i.qty,0)); updateCartCount(); renderMiniCart(); }
 
 /* Checkout modal */
-function openCheckout(){ const modal = document.getElementById('checkout'); modal.style.display='flex'; modal.setAttribute('aria-hidden','false'); populateCheckout(); }
+function openCheckout(){ 
+  if(getCart().length===0){ showToast('Сначала выберите товары'); return; }
+  const modal = document.getElementById('checkout'); 
+  modal.style.display='flex'; 
+  modal.setAttribute('aria-hidden','false'); 
+  populateCheckout(); 
+}
 function closeCheckout(){ const modal = document.getElementById('checkout'); modal.style.display='none'; modal.setAttribute('aria-hidden','true'); }
 function populateCheckout(){ const itemsBox = document.getElementById('order-items'); const c = getCart(); itemsBox.innerHTML = c.map(i=>`<div style="display:flex;justify-content:space-between;padding:6px 0">${i.name} x${i.qty}<div>${formatPrice(i.price*i.qty)}</div></div>`).join('') || '<div class="muted">Корзина пуста</div>'; updateOrderTotal(); document.querySelectorAll('input[name="receive"]').forEach(r=> r.onchange = onReceiveChange); onReceiveChange(); }
 function onReceiveChange(){ const r = document.querySelector('input[name="receive"]:checked').value; const el = document.getElementById('delivery-options'); if(r==='Доставка') el.style.display='block'; else el.style.display='none'; updateDeliveryPreview(); }
@@ -145,13 +156,12 @@ function updateOrderTotal(){ const subtotal = cartSubtotal(); const r = document
 
 function submitOrder(e){
   e.preventDefault();
+  if(getCart().length===0){ showToast('Корзина пуста. Добавьте товары.'); closeCheckout(); return; }
   const fio = document.getElementById('fio').value.trim();
   const phone = document.getElementById('phone').value.trim();
   if(!fio||!phone){ alert('Укажите ФИО и телефон'); return; }
   const receive = document.querySelector('input[name="receive"]:checked').value;
-  let address = '';
-  let liftText = '';
-  let liftCost = 0;
+  let address = ''; let liftText = ''; let liftCost = 0;
   if(receive==='Доставка'){
     address = document.getElementById('address').value.trim();
     if(!address){ alert('Укажите адрес доставки'); return; }
@@ -159,10 +169,8 @@ function submitOrder(e){
     const floors = Number(document.getElementById('floors')?.value || 1);
     if(lift==='lift'){ liftText='Лифт (3000 тг)'; liftCost=3000; } else { liftText=`Подъём ${floors} этаж(а) x2000 тг = ${floors*2000} тг`; liftCost = floors*2000; }
   }
-
   const items = getCart().map(i=>`- ${i.name} x${i.qty} = ${formatPrice(i.price*i.qty)}`).join('\n');
-  const subtotal = cartSubtotal();
-  const total = subtotal + liftCost;
+  const subtotal = cartSubtotal(); const total = subtotal + liftCost;
   let msg = `Новый заказ!%0AФИО: ${encodeURIComponent(fio)}%0AТелефон: ${encodeURIComponent(phone)}%0AСпособ: ${receive}`;
   if(receive==='Доставка'){ msg += `%0AАдрес: ${encodeURIComponent(address)}%0AПодъём: ${encodeURIComponent(liftText)}`; }
   msg += `%0A%0AТовары:%0A${encodeURIComponent(items)}%0A%0AИтого: ${encodeURIComponent(formatPrice(total))}`;
@@ -178,11 +186,33 @@ function submitOrder(e){
 function formatPrice(n){ return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' тг'; }
 function getStars(r){ const full = Math.round(r||4); return '★'.repeat(full); }
 
-function showToast(text){ const t = document.createElement('div'); t.innerText = text; t.style.position='fixed'; t.style.right='18px'; t.style.bottom='98px'; t.style.background='rgba(0,0,0,0.7)'; t.style.padding='10px 12px'; t.style.borderRadius='8px'; t.style.zIndex=120; document.body.appendChild(t); setTimeout(()=>t.remove(),2000); }
+/* ==== ЦЕНТР ЭКРАНА ==== */
+function showToast(text){ 
+  const t = document.createElement('div'); 
+  t.innerText = text; 
+  t.style.position = 'fixed'; 
+  t.style.left = '50%'; 
+  t.style.top = '50%'; 
+  t.style.transform = 'translate(-50%, -50%)'; 
+  t.style.background = 'rgba(0,0,0,0.85)'; 
+  t.style.color = 'white'; 
+  t.style.padding = '16px 24px'; 
+  t.style.borderRadius = '12px'; 
+  t.style.fontSize = '18px'; 
+  t.style.fontWeight = '600'; 
+  t.style.zIndex = 2000; 
+  t.style.opacity = '0'; 
+  t.style.transition = 'opacity 0.3s ease'; 
+  document.body.appendChild(t); 
+  requestAnimationFrame(()=> t.style.opacity = '1');
+  setTimeout(()=>{ 
+    t.style.opacity = '0'; 
+    setTimeout(()=> t.remove(), 300); 
+  }, 2500); 
+}
 
 /* Init */
-document.addEventListener('DOMContentLoaded', ()=>{
-  // default
+document.addEventListener('DOMContentLoaded', ()=>{ 
   currentCategory = 'all';
   document.querySelectorAll('.chip').forEach(ch=> ch.onclick = ()=> setCategory(ch.dataset.cat));
   document.getElementById('priceMaxVal').innerText = Number(document.getElementById('priceMax').value).toLocaleString();

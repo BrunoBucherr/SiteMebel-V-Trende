@@ -5,7 +5,77 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mebel V Trende — Магазин мебели</title>
   <link rel="stylesheet" href="style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Подключаем Font Awesome для иконок -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #0f1720;
+      --card: #0b1116;
+      --muted: #9aa4ae;
+      --accent: #ff6a00;
+      --white: #eef3f7;
+    }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      transition: background 0.3s, color 0.3s;
+    }
+    /* Светлая тема */
+    .light-theme {
+      --bg: #f4f6f9;
+      --card: #ffffff;
+      --muted: #555;
+      --accent: #ff6a00;
+      --white: #0f1720;
+    }
+
+    /* Кнопки соцсетей */
+    .social-float {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1000;
+    }
+    .social-float a {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      color: #fff;
+      text-decoration: none;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .social-float a:hover {
+      transform: scale(1.1);
+    }
+    .whatsapp { background: #25D366; }
+    .telegram { background: #0088cc; }
+    .instagram { 
+      background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    }
+
+    /* Кнопка темы */
+    #theme-toggle {
+      border: none;
+      background: var(--card);
+      color: var(--white);
+      font-size: 20px;
+      border-radius: 8px;
+      padding: 6px 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #theme-toggle:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
   <div class="wrap">
@@ -27,13 +97,22 @@
       <div class="actions">
         <button class="btn" onclick="openCart()">Корзина (<span id="cart-count">0</span>)</button>
         <button class="btn" onclick="scrollToSection('catalog')">Смотреть каталог</button>
+        <!-- Кнопка смены темы -->
+        <button id="theme-toggle">🌙</button>
       </div>
     </header>
 
     <section class="hero">
       <div class="hero-left">
         <h1>Мебель в тренде — уют и стиль в каждом доме</h1>
-        <p class="muted">Большой выбор диванов, стульев и столов. Фабричная мебель,доставка по Костанайской области</p>
+        <p class="muted">Большой выбор диванов, стульев и столов. Фабричная мебель, доставка по Костанайской области</p>
+        <!-- Блок "На заказ" -->
+        <div class="order-block">
+          <h2>Хотите мебель под заказ?</h2>
+          <p>Изготовим диваны, стулья и столы по вашим размерам и дизайну.</p>
+          <a href="#order" class="btn-order">Сделать на заказ</a>
+        </div>
+
         <div class="controls">
           <div class="categories" id="category-controls">
             <button class="chip active" data-cat="all" onclick="setCategory('all')">Все</button>
@@ -161,9 +240,40 @@
     </div>
   </div>
 
-  <button class="whatsapp-float" onclick="window.open('https://wa.me/77085015423','_blank')">💬</button>
+  <!-- Соцсети справа внизу -->
+  <div class="social-float">
+    <a class="whatsapp" href="https://wa.me/77085015423" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a class="telegram" href="https://t.me/burrymewithwaifu" target="_blank"><i class="fab fa-telegram"></i></a>
+    <a class="instagram" href="https://www.instagram.com/mebel_v_trende.kst/?igsh=MThqeG9yM3Vma2Rnbw%3D%3D#" target="_blank"><i class="fab fa-instagram"></i></a>
+  </div>
 
   <script src="products.js"></script>
   <script src="script.js"></script>
+  <script>
+    /* === Тема === */
+    let THEME = localStorage.getItem('theme') || 'dark';
+    applyTheme();
+
+    function applyTheme() {
+      if (THEME === 'light') {
+        document.body.classList.add('light-theme');
+        document.getElementById('theme-toggle').textContent = '☀️';
+      } else {
+        document.body.classList.remove('light-theme');
+        document.getElementById('theme-toggle').textContent = '🌙';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const themeBtn = document.getElementById('theme-toggle');
+      if (themeBtn) {
+        themeBtn.addEventListener('click', () => {
+          THEME = (THEME === 'dark') ? 'light' : 'dark';
+          localStorage.setItem('theme', THEME);
+          applyTheme();
+        });
+      }
+    });
+  </script>
 </body>
 </html>
