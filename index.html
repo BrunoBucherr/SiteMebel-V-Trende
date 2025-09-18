@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mebel V Trende — Магазин мебели</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Подключаем Font Awesome для иконок -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     :root {
       --bg: #0f1720;
@@ -15,70 +16,29 @@
       --accent: #ff6a00;
       --white: #eef3f7;
     }
-    body {
-      background: var(--bg);
-      color: var(--white);
-      transition: background 0.3s, color 0.3s;
-    }
-    /* Светлая тема */
-    .light-theme {
-      --bg: #f4f6f9;
-      --card: #ffffff;
-      --muted: #555;
-      --accent: #ff6a00;
-      --white: #0f1720;
-    }
-
-    /* Кнопки соцсетей */
-    .social-float {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      z-index: 1000;
-    }
-    .social-float a {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      color: #fff;
-      text-decoration: none;
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-    .social-float a:hover {
-      transform: scale(1.1);
-    }
-    .whatsapp { background: #25D366; }
-    .telegram { background: #0088cc; }
-    .instagram { 
-      background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
-    }
-
-    /* Кнопка темы */
-    #theme-toggle {
-      border: none;
-      background: var(--card);
-      color: var(--white);
-      font-size: 20px;
-      border-radius: 8px;
-      padding: 6px 10px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    #theme-toggle:hover {
-      background: var(--accent);
-      color: #fff;
-    }
+    body { background: var(--bg); color: var(--white); transition: .3s; }
+    .light-theme { --bg:#f4f6f9; --card:#fff; --muted:#555; --accent:#ff6a00; --white:#0f1720; }
+    .social-float{position:fixed;right:20px;bottom:20px;display:flex;flex-direction:column;gap:10px;z-index:1000}
+    .social-float a{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;text-decoration:none;transition:.2s}
+    .social-float a:hover{transform:scale(1.1)}
+    .whatsapp{background:#25D366}.telegram{background:#0088cc}
+    .instagram{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%)}
+    #theme-toggle{border:none;background:var(--card);color:var(--white);font-size:20px;border-radius:8px;padding:6px 10px;cursor:pointer;transition:.3s}
+    #theme-toggle:hover{background:var(--accent);color:#fff}
+    .price-filter{display:flex;flex-direction:column;gap:10px;margin:15px 0;padding:14px;background:var(--card);border:1px solid #1f2933;border-radius:12px;font-size:14px}
+    .price-filter input[type="number"]{width:100px;padding:6px 10px;border:1px solid #1f2933;border-radius:8px;background:#0f1720;color:var(--white);font-size:14px}
+    .price-filter input[type="range"]{-webkit-appearance:none;width:100%;height:6px;background:#1f2933;border-radius:6px;cursor:pointer}
+    .price-filter input[type="range"]::-webkit-slider-thumb{width:16px;height:16px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px rgba(255,106,0,0.6)}
+    .price-value{font-weight:600;color:var(--accent)}
+    .map-section{margin-top:50px;}
+    .map-title{font-size:24px;font-weight:800;color:var(--accent);margin-bottom:10px;}
+    .map-desc{color:var(--muted);margin-bottom:20px;}
+    .map-container{width:100%;height:400px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);}
   </style>
 </head>
 <body>
   <div class="wrap">
+    <!-- === HEADER === -->
     <header class="header">
       <div class="logo">
         <img src="logo.png" alt="Mebel V Trende" class="logo-img">
@@ -87,32 +47,28 @@
           <div class="brand-sub">Диваны • Стулья • Столы</div>
         </div>
       </div>
-
       <nav class="main-nav">
         <a href="#catalog">Каталог</a>
         <a href="#popular">Популярное</a>
         <a href="#about">О нас</a>
       </nav>
-
       <div class="actions">
         <button class="btn" onclick="openCart()">Корзина (<span id="cart-count">0</span>)</button>
         <button class="btn" onclick="scrollToSection('catalog')">Смотреть каталог</button>
-        <!-- Кнопка смены темы -->
         <button id="theme-toggle">🌙</button>
       </div>
     </header>
 
+    <!-- === HERO === -->
     <section class="hero">
       <div class="hero-left">
         <h1>Мебель в тренде — уют и стиль в каждом доме</h1>
         <p class="muted">Большой выбор диванов, стульев и столов. Фабричная мебель, доставка по Костанайской области</p>
-        <!-- Блок "На заказ" -->
         <div class="order-block">
           <h2>Хотите мебель под заказ?</h2>
           <p>Изготовим диваны, стулья и столы по вашим размерам и дизайну.</p>
           <a href="#order" class="btn-order">Сделать на заказ</a>
         </div>
-
         <div class="controls">
           <div class="categories" id="category-controls">
             <button class="chip active" data-cat="all" onclick="setCategory('all')">Все</button>
@@ -120,7 +76,6 @@
             <button class="chip" data-cat="Столы" onclick="setCategory('Столы')">Столы</button>
             <button class="chip" data-cat="Стулья" onclick="setCategory('Стулья')">Стулья</button>
           </div>
-
           <div class="search-sort">
             <input id="search" placeholder="Поиск по товарам..." oninput="onSearch()" />
             <select id="sort" onchange="onSort()">
@@ -130,15 +85,17 @@
               <option value="rating">По рейтингу</option>
             </select>
           </div>
-
           <div class="price-filter">
-            <label>Цена от <input id="priceMin" type="number" min="10000" step="10000" value="10000" oninput="renderProducts()" /> до
-            <input id="priceMax" type="range" min="10000" max="2000000" step="10000" value="2000000" oninput="onPriceRange()"/></label>
+            <label>
+              Цена от 
+              <input id="priceMin" type="number" min="10000" step="10000" value="10000" oninput="renderProducts()" />
+              до
+              <input id="priceMax" type="range" min="10000" max="2000000" step="10000" value="2000000" oninput="onPriceRange()"/>
+            </label>
             <div class="price-value">до <span id="priceMaxVal">2 000 000</span> тг</div>
           </div>
         </div>
       </div>
-
       <aside class="hero-right card">
         <div style="font-weight:700">Быстрая корзина</div>
         <div id="mini-cart" class="muted" style="margin-top:10px">Пусто</div>
@@ -149,17 +106,20 @@
       </aside>
     </section>
 
+    <!-- === CATALOG === -->
     <section id="catalog" class="catalog-section">
       <h2>Каталог</h2>
       <div id="products" class="products-grid"></div>
       <div id="pagination" style="margin-top:14px;text-align:center"></div>
     </section>
 
+    <!-- === POPULAR === -->
     <section id="popular" class="popular-section">
       <h2>Популярные</h2>
       <div id="popular-list" class="products-grid small-grid"></div>
     </section>
 
+    <!-- === ABOUT === -->
     <section id="about" class="about-section">
       <h2>Почему выбирают нас</h2>
       <div class="features">
@@ -168,20 +128,29 @@
         <div class="feature">💳 Удобная оплата</div>
         <div class="feature">📞 Поддержка</div>
       </div>
-
       <div class="about-text card">
         <p class="muted">Mebel V Trende — команда профессионалов, мы подберём мебель под ваш интерьер, поможем с доставкой.</p>
         <p><strong>Контакты:</strong> +7 708 501 54 23 — Whatsapp / Звонок</p>
       </div>
     </section>
 
+    <!-- === MAP === -->
+    <section class="map-section wrap">
+      <h2 class="map-title">Где нас найти</h2>
+      <p class="map-desc">Наши салоны и точки продаж в Костанае</p>
+      <div class="map-container">
+        <script async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Aa48afa48fede7839eadf45b13d6fc462fe1d4866fb2e5f81b0313bcbe9c389e7&amp;width=100%25&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
+      </div>
+    </section>
+
+    <!-- === FOOTER === -->
     <footer class="footer">
       <div>© Mebel V Trende — Все права защищены</div>
       <div class="muted">Доставка по Костанайской облости • support@mebelvtrende.kz</div>
     </footer>
   </div>
 
-  <!-- Cart sidebar -->
+  <!-- === CART SIDEBAR === -->
   <aside id="cart" class="cart-sidebar" aria-hidden="true">
     <div class="cart-header"><h3>Корзина</h3><button class="close" onclick="closeCart()">✕</button></div>
     <div id="cart-items" class="cart-items"></div>
@@ -194,7 +163,7 @@
     </div>
   </aside>
 
-  <!-- Checkout modal -->
+  <!-- === CHECKOUT MODAL === -->
   <div id="checkout" class="modal" aria-hidden="true">
     <div class="modal-box">
       <button class="close" onclick="closeCheckout()">✕</button>
@@ -206,23 +175,23 @@
           <div><label><input type="radio" name="receive" value="Самовывоз" checked> Самовывоз</label>
           <label><input type="radio" name="receive" value="Доставка"> Доставка</label></div>
         </div>
-
         <div id="delivery-options" style="display:none">
           <div class="field"><label>Адрес доставки</label><input id="address" placeholder="Город, улица, дом, кв."></div>
           <div class="field"><label>Подъём</label>
             <div><label><input type="radio" name="lift" value="noLift" checked> Подъём 2000 тг/этаж</label>
             <label><input type="radio" name="lift" value="lift"> Есть лифт (3000 тг)</label></div>
           </div>
-          <div class="field"><label>Этажи (если подъём без лифта)</label><input id="floors" type="number" min="0" value="1" oninput="updateDeliveryPreview()"></div>
+          <div class="field"><label>Этажи (если подъём без лифта)</label><input id="floors" type="number" min="0" value="1"></div>
           <div class="muted">Стоимость подъёма: <span id="delivery-cost">0 тг</span></div>
         </div>
-
         <div class="order-summary card" style="margin-top:12px">
           <div style="font-weight:700">Товары</div>
           <div id="order-items" style="margin-top:8px"></div>
           <div style="border-top:1px solid rgba(255,255,255,0.03);padding-top:8px;margin-top:8px">Итого: <strong id="order-total">0 тг</strong></div>
         </div>
-
+        <p class="muted" style="font-size:12px;margin-top:8px">
+          Нажимая «Купить», вы соглашаетесь с обработкой персональных данных и условиями магазина.
+        </p>
         <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
           <button type="button" class="btn" onclick="closeCheckout()">Отмена</button>
           <button type="submit" class="btn accent">Купить</button>
@@ -231,29 +200,87 @@
     </div>
   </div>
 
-  <!-- Success modal -->
-  <div id="success" class="modal" aria-hidden="true">
-    <div class="modal-box">
-      <h3>Спасибо — заказ отправлен</h3>
-      <p class="muted">Мы свяжемся с вами в ближайшее время для подтверждения.</p>
-      <div style="margin-top:12px"><button class="btn" onclick="closeSuccess()">Закрыть</button></div>
-    </div>
-  </div>
-
-  <!-- Соцсети справа внизу -->
+  <!-- === SOCIAL FLOAT === -->
   <div class="social-float">
     <a class="whatsapp" href="https://wa.me/77085015423" target="_blank"><i class="fab fa-whatsapp"></i></a>
     <a class="telegram" href="https://t.me/burrymewithwaifu" target="_blank"><i class="fab fa-telegram"></i></a>
-    <a class="instagram" href="https://www.instagram.com/mebel_v_trende.kst/?igsh=MThqeG9yM3Vma2Rnbw%3D%3D#" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a class="instagram" href="https://www.instagram.com/mebel_v_trende.kst/" target="_blank"><i class="fab fa-instagram"></i></a>
   </div>
 
+  <!-- === SCRIPTS === -->
   <script src="products.js"></script>
   <script src="script.js"></script>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script>
-    /* === Тема === */
+    (function(){ emailjs.init("HKKpgydMML8nmpH7O"); })();
+
+    function submitOrder(event) {
+      event.preventDefault();
+
+      const fio = document.getElementById("fio").value;
+      const phone = document.getElementById("phone").value;
+      const receive = document.querySelector('input[name="receive"]:checked').value;
+      const address = document.getElementById("address")?.value || "-";
+      const lift = document.querySelector('input[name="lift"]:checked')?.value || "-";
+      const floors = document.getElementById("floors")?.value || "0";
+
+      const cart = getCart();
+      if(cart.length === 0){ 
+        Swal.fire({
+          icon: 'warning',
+          title: 'Корзина пуста!',
+          text: 'Добавьте товары перед оформлением заказа.'
+        });
+        return; 
+      }
+
+      let cartText = "";
+      cart.forEach(item => {
+        cartText += `- ${item.name} x${item.qty} = ${item.price * item.qty} тг\n`;
+      });
+
+      const total = document.getElementById("order-total").textContent;
+
+      const templateParams = { fio, phone, receive, address, lift, floors, cart: cartText, total };
+
+      // ⏳ Мгновенно показываем «Заявка отправляется...»
+      Swal.fire({
+        title: 'Заявка отправляется...',
+        text: 'Пожалуйста, подождите',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+      emailjs.send("service_usbyuzc", "template_rl357qe", templateParams)
+        .then(() => {
+          clearCart();
+          closeCheckout();
+          Swal.fire({
+            icon: 'success',
+            title: 'Спасибо за заказ!',
+            text: 'Мы свяжемся с вами в ближайшее время 📞',
+            confirmButtonText: 'Ок'
+          });
+        })
+        .catch((error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Ошибка!',
+            text: 'Не удалось отправить заказ. Попробуйте снова.'
+          });
+          console.error("EmailJS error:", error);
+        });
+    }
+  </script>
+
+  <!-- Тема -->
+  <script>
     let THEME = localStorage.getItem('theme') || 'dark';
     applyTheme();
-
     function applyTheme() {
       if (THEME === 'light') {
         document.body.classList.add('light-theme');
@@ -263,16 +290,12 @@
         document.getElementById('theme-toggle').textContent = '🌙';
       }
     }
-
     document.addEventListener('DOMContentLoaded', () => {
-      const themeBtn = document.getElementById('theme-toggle');
-      if (themeBtn) {
-        themeBtn.addEventListener('click', () => {
-          THEME = (THEME === 'dark') ? 'light' : 'dark';
-          localStorage.setItem('theme', THEME);
-          applyTheme();
-        });
-      }
+      document.getElementById('theme-toggle').addEventListener('click', () => {
+        THEME = (THEME === 'dark') ? 'light' : 'dark';
+        localStorage.setItem('theme', THEME);
+        applyTheme();
+      });
     });
   </script>
 </body>

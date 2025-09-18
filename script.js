@@ -159,23 +159,39 @@ function submitOrder(e){
   if(getCart().length===0){ showToast('Корзина пуста. Добавьте товары.'); closeCheckout(); return; }
   const fio = document.getElementById('fio').value.trim();
   const phone = document.getElementById('phone').value.trim();
-  if(!fio||!phone){ alert('Укажите ФИО и телефон'); return; }
+  if(!fio||!phone){ showToast('⚠ Укажите ФИО и телефон'); return; }
   const receive = document.querySelector('input[name="receive"]:checked').value;
   let address = ''; let liftText = ''; let liftCost = 0;
   if(receive==='Доставка'){
     address = document.getElementById('address').value.trim();
-    if(!address){ alert('Укажите адрес доставки'); return; }
+    if(!address){ showToast('⚠ Укажите адрес доставки'); return; }
     const lift = document.querySelector('input[name="lift"]:checked').value;
     const floors = Number(document.getElementById('floors')?.value || 1);
     if(lift==='lift'){ liftText='Лифт (3000 тг)'; liftCost=3000; } else { liftText=`Подъём ${floors} этаж(а) x2000 тг = ${floors*2000} тг`; liftCost = floors*2000; }
   }
   const items = getCart().map(i=>`- ${i.name} x${i.qty} = ${formatPrice(i.price*i.qty)}`).join('\n');
   const subtotal = cartSubtotal(); const total = subtotal + liftCost;
-  let msg = `Новый заказ!%0AФИО: ${encodeURIComponent(fio)}%0AТелефон: ${encodeURIComponent(phone)}%0AСпособ: ${receive}`;
-  if(receive==='Доставка'){ msg += `%0AАдрес: ${encodeURIComponent(address)}%0AПодъём: ${encodeURIComponent(liftText)}`; }
-  msg += `%0A%0AТовары:%0A${encodeURIComponent(items)}%0A%0AИтого: ${encodeURIComponent(formatPrice(total))}`;
-  const wa = `https://wa.me/${WHATSAPP}?text=${msg}`;
-  window.open(wa,'_blank');
+
+  const templateParams = {
+    fio,
+    phone,
+    receive,
+    address,
+    lift: liftText,
+    floors: document.getElementById('floors')?.value || '',
+    cart: items,
+    total: formatPrice(total)
+  };
+
+  emailjs.send("service_usbyuzc","template_rl357qe",templateParams,"HKKpgydMML8nmpH7O")
+    .then(function(response) {
+        console.log("Email отправлен!", response.status, response.text);
+        showToast("✅ Заказ оформлен! Мы вам перезвоним.");
+    }, function(error) {
+        console.error("Ошибка при отправке email:", error);
+        showToast("❌ Ошибка при отправке заказа. Попробуйте снова.");
+    });
+
   clearCart();
   closeCheckout();
   document.getElementById('success').style.display='flex';
@@ -213,6 +229,7 @@ function showToast(text){
 
 /* Init */
 document.addEventListener('DOMContentLoaded', ()=>{ 
+  emailjs.init("HKKpgydMML8nmpH7O");
   currentCategory = 'all';
   document.querySelectorAll('.chip').forEach(ch=> ch.onclick = ()=> setCategory(ch.dataset.cat));
   document.getElementById('priceMaxVal').innerText = Number(document.getElementById('priceMax').value).toLocaleString();
